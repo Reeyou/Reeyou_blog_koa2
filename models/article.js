@@ -1,11 +1,20 @@
 const mongoose = require('mongoose')
 
+let count = 1;
 let articleSchema = new mongoose.Schema({
+  id: {
+    type: String,
+    default: () => count++
+  },
+  // tag_id: {
+  //   type: String,
+  //   required: true
+  // },
   title: {
     type: String,
     required: true
   },
-  subtitle: {
+  desc: {
     type: String,
     required: true
   },
@@ -19,6 +28,10 @@ let articleSchema = new mongoose.Schema({
   content: {
     type: String,
     required: true
+  },
+  create_time: {
+    type: String,
+    default: Date.now()
   }
 })
 

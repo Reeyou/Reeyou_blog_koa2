@@ -1,0 +1,81 @@
+const router = require('koa-router')()
+
+const Tag = require('../../models/tag')
+
+router.post('/addTagName', async(ctx,next) => {
+  const { tagname } = ctx.request.body
+
+  const tag = new Tag({
+    tagname
+  })
+  let code, msg
+  try {
+    await tag.save()
+    code = 200
+    msg = '添加成功'
+  } catch (e) {
+    code = -1
+    msg = '添加失败'
+  }
+
+  ctx.response.body = {
+    code: code,
+    msg: msg,
+    data: ctx.request.body
+  }
+})
+router.get('/getTagList', async(ctx, next) => {
+  let code, msg ,data
+  try {
+    data = await Tag.find()
+    code = 200
+    msg = '查找成功'
+  } catch (e) {
+    code = -1
+    msg = '查找失败'
+  }
+  ctx.response.body = {
+    code,
+    msg,
+    data
+  }
+})
+router.post('/updateTagName', async(ctx) => {
+  const { tagid, tagname } = ctx.request.body
+
+  let code, msg, data
+  try {
+    data = await Tag.where({tag_id: tagid}).update({tagname: tagname})
+    code = 200
+    msg = '修改成功'
+  } catch (e) {
+    code = -1
+    msg = '修改失败'
+  }
+
+  ctx.response.body = {
+    code: code,
+    msg: msg,
+    data: ctx.request.body
+  }
+})
+router.get('/deleteTagName', async(ctx) => {
+  const tagid = ctx.request.query.tagid
+
+  let code, msg ,data
+  try {
+    data = await Tag.where({tag_id: tagid}).remove()
+    code = 200
+    msg = '删除成功'
+  } catch (e) {
+    code = -1
+    msg = '删除失败'
+  }
+  ctx.response.body = {
+    code,
+    msg,
+    data
+  }
+})
+
+module.exports = router

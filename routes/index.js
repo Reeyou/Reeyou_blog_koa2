@@ -1,7 +1,11 @@
-const article = require('./article')
-const users = require('./users')
+const article = require('./route/article')
+const users = require('./route/users')
+const tag = require('./route/tag')
+const upload = require('./route/upload')
 
 module.exports = {
-  article: article,
-  users: users
+  article,
+  users,
+  tag,
+  upload
 }

@@ -4,6 +4,7 @@ const views = require('koa-views')
 const json = require('koa-json')
 const onerror = require('koa-onerror')
 const bodyparser = require('koa-bodyparser')
+const koaBody = require('koa-body');
 const logger = require('koa-logger')
 
 const mongoose = require('mongoose')
@@ -13,11 +14,16 @@ const routers = require('./routes/index')
 
 // error handler
 onerror(app)
-
+app.use(koaBody({
+  multipart: true,
+  formidable: {
+      maxFileSize: 200*1024*1024    // 设置上传文件大小最大限制，默认2M
+  }
+}));
 // middlewares
-app.use(bodyparser({
-  enableTypes:['json', 'form', 'text']
-}))
+// app.use(bodyparser({
+//   enableTypes:['json', 'form', 'text']
+// }))
 app.use(json())
 app.use(logger())
 app.use(require('koa-static')(__dirname + '/public'))
@@ -50,8 +56,11 @@ app.use(async (ctx, next) => {
 })
 
 // routes
-app.use(routers.article.routes(), routers.article.allowedMethods())
-app.use(routers.users.routes(), routers.users.allowedMethods())
+const { article,users,tag,upload } = routers
+app.use(article.routes(), article.allowedMethods())
+app.use(users.routes(), users.allowedMethods())
+app.use(tag.routes(), tag.allowedMethods())
+app.use(upload.routes(), upload.allowedMethods())
 
 // error-handling
 app.on('error', (err, ctx) => {
