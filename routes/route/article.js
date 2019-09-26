@@ -51,5 +51,23 @@ router.get('/getArticleList', async(ctx) => {
     data,
   }
 })
+router.get('/getArticleDetail/:id', async(ctx) => {
+  const id = ctx.params.id
+  console.log(id)
+  let code, msg, data
+  try{
+    data = await Article.findOne({id: id})
+    code = 200
+    msg = '查找成功'
+  } catch (e) {
+    code = -1
+    msg = '查找失败'
+  }
+  ctx.response.body = {
+    code: code,
+    msg: msg,
+    data,
+  }
+})
 
 module.exports = router
