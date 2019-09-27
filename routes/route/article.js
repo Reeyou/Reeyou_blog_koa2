@@ -10,7 +10,7 @@ router.get('/', async (ctx, next) => {
 })
 
 router.post('/addArticle', async (ctx, next) => {
-  const { title,desc,poster,tag,content } = ctx.request.body
+  const { title, desc, poster, tag, content } = ctx.request.body
   const article = new Article({
     title,
     desc,
@@ -56,7 +56,7 @@ router.get('/getArticleDetail/:id', async(ctx) => {
   console.log(id)
   let code, msg, data
   try{
-    data = await Article.findOne({id: id})
+    data = await Article.findOne({_id: id})
     code = 200
     msg = '查找成功'
   } catch (e) {

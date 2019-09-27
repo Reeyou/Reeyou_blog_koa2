@@ -2,10 +2,10 @@ const mongoose = require('mongoose')
 
 let count = 1;
 let articleSchema = new mongoose.Schema({
-  id: {
-    type: String,
-    default: () => count++
-  },
+  // id: {
+  //   type: String,
+  //   default: () => count++
+  // },
   // tag_id: {
   //   type: String,
   //   required: true
