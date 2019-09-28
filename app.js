@@ -56,13 +56,14 @@ app.use(async (ctx, next) => {
 })
 
 // routes
-const { article,users,tag,upload,login,comment } = routers
+const { article,users,tag,upload,login,comment,message } = routers
 app.use(article.routes(), article.allowedMethods())
 app.use(users.routes(), users.allowedMethods())
 app.use(tag.routes(), tag.allowedMethods())
 app.use(upload.routes(), upload.allowedMethods())
 app.use(login.routes(), login.allowedMethods())
 app.use(comment.routes(), comment.allowedMethods())
+app.use(message.routes(), message.allowedMethods())
 
 // error-handling
 app.on('error', (err, ctx) => {

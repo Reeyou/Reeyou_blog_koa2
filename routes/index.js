@@ -4,6 +4,7 @@ const tag = require('./route/tag')
 const upload = require('./route/upload')
 const login = require('./route/login')
 const comment = require('./route/comment')
+const message = require('./route/message')
 
 module.exports = {
   article,
@@ -11,5 +12,6 @@ module.exports = {
   tag,
   upload,
   login,
-  comment
+  comment,
+  message
 }
