@@ -13,11 +13,7 @@ let commentSchema = new mongoose.Schema({
   content: {
     type: String,
     required: true
-  },
-  create_time: {
-    type: String,
-    default: Date.now()
   }
-})
+},{timestamps: {createdAt: 'create_time', updatedAt: 'update_time'}})
 
 module.exports = mongoose.model('Comment', commentSchema)

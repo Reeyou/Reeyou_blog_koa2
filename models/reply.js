@@ -2,16 +2,12 @@ const mongoose = require('mongoose')
 
 let count = 1;
 let replySchma = new mongoose.Schema({
-  id: {
-    type: String,
-    default: () => count++
-  },
   article_id: {
     type: String,
     required: true
   },
   //回复用户id
-  from_uid: {
+  from_name: {
     type: String,
     required: true
   },
@@ -23,11 +19,7 @@ let replySchma = new mongoose.Schema({
   content: {
     type: String,
     required: true
-  },
-  create_time: {
-    type: String,
-    default: Date.now()
   }
-})
+},{timestamps: {createdAt: 'create_time', updatedAt: 'update_time'}})
 
 module.exports = mongoose.model('Reply', replySchma)

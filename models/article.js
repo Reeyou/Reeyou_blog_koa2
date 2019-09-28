@@ -31,7 +31,7 @@ let articleSchema = new mongoose.Schema({
   },
   create_time: {
     type: String,
-    default: Date.now()
+    default: new Date().toLocaleString('chinese',{hour12:false})
   }
 })
 
