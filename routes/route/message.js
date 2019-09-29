@@ -95,4 +95,22 @@ router.post('/replyMessage', async(ctx) => {
   }
 })
 
+router.post('/deleteReplyMessage', async(ctx) => {
+  const { replyMsgId } = ctx.request.body
+  let code, msg, data;
+  try {
+    data = await MsgReply.remove({_id: replyMsgId})
+    code = 200
+    msg = '删除成功'
+  } catch (e) {
+    code = -1
+    msg = '删除失败'
+  }
+  ctx.response.body = {
+    code: code,
+    msg: msg,
+    data: data
+  }
+})
+
 module.exports = router

@@ -28,11 +28,7 @@ let articleSchema = new mongoose.Schema({
   content: {
     type: String,
     required: true
-  },
-  create_time: {
-    type: String,
-    default: new Date().toLocaleString('chinese',{hour12:false})
   }
-})
+},{timestamps: {createdAt: 'create_time', updatedAt: 'update_time'}})
 
 module.exports = mongoose.model('Article', articleSchema)

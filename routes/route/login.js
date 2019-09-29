@@ -14,8 +14,11 @@ router.post('/sendCode', async(ctx) => {
     code = -1
     msg = '查找失败'
   }
-  const clientID = '310316c9d00ddccc32ef',
-  clientSecret = 'adcfffb9e02749a57653a7881c40350cb9c66143'
+  
+  const clientID = '8f2c841682b05c643d90',
+  clientSecret = 'b3a0be535d3b67b4145dd5decde862408b036bc2'
+  // const clientID = '310316c9d00ddccc32ef',
+  // clientSecret = 'adcfffb9e02749a57653a7881c40350cb9c66143'
   const tokenResponse = await axios({
     method: 'POST',
     url: 'https://github.com/login/oauth/access_token?' +
