@@ -37,8 +37,10 @@ router.post('/addArticle', async (ctx, next) => {
 })
 router.get('/getArticleList', async(ctx) => {
   let code, msg, data
+  // let limit = 6, size = 1
   try{
     data = await Article.find()
+    // data = await Article.find({}).skip(1).limit(2)
     code = 200
     msg = '查找成功'
   } catch (e) {

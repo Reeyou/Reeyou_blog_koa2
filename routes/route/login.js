@@ -4,7 +4,6 @@ const axios = require('axios')
 
 router.post('/sendCode', async(ctx) => {
   const uriCode = ctx.request.body.code
-  console.log(uriCode)
   let code, msg, data
   try{
     data = ctx.request.body
@@ -15,10 +14,10 @@ router.post('/sendCode', async(ctx) => {
     msg = '查找失败'
   }
   
-  const clientID = '8f2c841682b05c643d90',
-  clientSecret = 'b3a0be535d3b67b4145dd5decde862408b036bc2'
-  // const clientID = '310316c9d00ddccc32ef',
-  // clientSecret = 'adcfffb9e02749a57653a7881c40350cb9c66143'
+  // const clientID = '8f2c841682b05c643d90',
+  // clientSecret = 'b3a0be535d3b67b4145dd5decde862408b036bc2'
+  const clientID = '310316c9d00ddccc32ef',
+  clientSecret = 'adcfffb9e02749a57653a7881c40350cb9c66143'
   const tokenResponse = await axios({
     method: 'POST',
     url: 'https://github.com/login/oauth/access_token?' +
@@ -38,18 +37,11 @@ router.post('/sendCode', async(ctx) => {
       Authorization: `token ${accessToken}`
     }
   });
-  console.log(result)
   ctx.response.body = {
     code: code,
     msg: msg,
     data: result.data,
   }
-})
-router.get('/', async (ctx, next) => {
-  await ctx.render('index', {
-    title: 'Hello Koa 2!'
-  })
-  console.log(ctx)
 })
 
 module.exports = router
