@@ -1,10 +1,10 @@
-const article = require('./route/article')
-const users = require('./route/users')
-const tag = require('./route/tag')
-const upload = require('./route/upload')
-const login = require('./route/login')
-const comment = require('./route/comment')
-const message = require('./route/message')
+const article = require('./admin/article')
+const users = require('./admin/users')
+const tag = require('./admin/tag')
+const upload = require('./admin/upload')
+const login = require('./web/login')
+const comment = require('./web/comment')
+const message = require('./web/message')
 
 module.exports = {
   article,

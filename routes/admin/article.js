@@ -2,13 +2,7 @@ const router = require('koa-router')()
 
 const Article = require('../../models/article')
 
-router.get('/', async (ctx, next) => {
-  await ctx.render('index', {
-    title: 'Hello Koa 2!'
-  })
-  console.log(ctx)
-})
-
+router.prefix('/admin')
 router.post('/addArticle', async (ctx, next) => {
   const { title, desc, poster, tag, content } = ctx.request.body
   const article = new Article({
@@ -28,32 +22,38 @@ router.post('/addArticle', async (ctx, next) => {
     code = -1
     msg = '添加失败'
   }
-
   ctx.response.body = {
     code: code,
     msg: msg,
     data: ctx.request.body
   }
 })
+
 router.get('/getArticleList', async(ctx) => {
-  let code, msg, data
-  // let limit = 6, size = 1
+  const { pageSize, limit } = ctx.request.query
+  let code, msg, list
   try{
-    data = await Article.find()
-    // console.log(data)
-    // data = await Article.find({}).skip(1).limit(2)
+    list = await Article.find()
+                        .skip((pageSize-1)*limit)
+                        .limit(Number(limit))
+    total = await Article.count()
     code = 200
     msg = '查找成功'
   } catch (e) {
+    console.log(e)
     code = -1
     msg = '查找失败'
   }
   ctx.body = {
     code: code,
     msg: msg,
-    data,
+    data: {
+      list,
+      total
+    },
   }
 })
+
 router.get('/getArticleDetail/:id', async(ctx) => {
   const id = ctx.params.id
   console.log(id)

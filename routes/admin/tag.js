@@ -2,6 +2,7 @@ const router = require('koa-router')()
 
 const Tag = require('../../models/tag')
 
+router.prefix('/admin')
 router.post('/addTagName', async(ctx,next) => {
   const { tagname } = ctx.request.body
 
@@ -18,16 +19,20 @@ router.post('/addTagName', async(ctx,next) => {
     msg = '添加失败'
   }
 
-  ctx.response.body = {
+  ctx.response.body = { 
     code: code,
     msg: msg,
     data: ctx.request.body
   }
 })
 router.get('/getTagList', async(ctx, next) => {
-  let code, msg ,data
+  const { pageSize, limit } = ctx.request.query
+  let code, msg ,list
   try {
-    data = await Tag.find()
+    list = await Tag.find({},null,{lean:true})
+                    .skip((pageSize-1)*limit)
+                    .limit(Number(limit))
+    total = await Tag.countDocuments()
     code = 200
     msg = '查找成功'
   } catch (e) {
@@ -37,7 +42,10 @@ router.get('/getTagList', async(ctx, next) => {
   ctx.response.body = {
     code,
     msg,
-    data
+    data: {
+      list,
+      total
+    }
   }
 })
 router.post('/updateTagName', async(ctx) => {

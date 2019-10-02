@@ -1,17 +1,18 @@
 const router = require('koa-router')()
 
-const Message = require('../../models/message')
-const MsgReply = require('../../models/msgReply')
+const Comment = require('../../models/comment')
+const Reply = require('../../models/reply')
 
-router.post('/addMessage', async(ctx) => {
-  const { name, content } = ctx.request.body
-  const message = new Message({
+router.post('/addComment', async(ctx) => {
+  const { articleId, name, content } = ctx.request.body
+  const comment = new Comment({
+    articleId,
     name,
     content
   })
   let code, msg;
   try {
-    await message.save()
+    await comment.save()
     code = 200
     msg = '添加成功'
   } catch (e) {
@@ -25,23 +26,27 @@ router.post('/addMessage', async(ctx) => {
   }
 })
 
-router.get('/getMessage', async(ctx) => {
-  let code, msg, data, msgReply;
+router.get('/getComment', async(ctx) => {
+  const { pageSize, limit, articleId } = ctx.request.query
+  pageSize ? pageSize : 1
+  limit ? limit : 5
+  let code, msg, data, reply;
   try {
-    data = await Message.find({},null,{lean: true})
-    let msgIdArr = []
+    data = await Comment.find({articleId: articleId},null,{lean: true})
+                        .skip((pageSize-1)*limit)
+                        .limit(Number(limit))
+    let replyIdArr = []
     for(var i = 0; i < data.length; i++) {
-      msgIdArr.push(data[i]._id)
+      replyIdArr.push(data[i]._id)
     }
-    for(var i = 0; i < msgIdArr.length; i++) {
-      msgReply = await MsgReply.find({to_uid: msgIdArr[i]})
-      data[i]['reply'] = msgReply
+    for(var i = 0; i < replyIdArr.length; i++) {
+      reply = await Reply.find({to_uid: replyIdArr[i]})
+      data[i]['reply'] = reply
     }
 
     code = 200
     msg = '查询成功'
   } catch (e) {
-    console.log(e)
     code = -1
     msg = '查询失败'
   }
@@ -52,11 +57,11 @@ router.get('/getMessage', async(ctx) => {
   }
 })
 
-router.post('/deleteMessage', async(ctx) => {
-  const { msgId } = ctx.request.body
+router.post('/deleteComment', async(ctx) => {
+  const { commentId } = ctx.request.body
   let code, msg, data;
   try {
-    data = await Message.remove({_id: msgId})
+    data = await Comment.remove({_id: commentId})
     code = 200
     msg = '删除成功'
   } catch (e) {
@@ -70,20 +75,20 @@ router.post('/deleteMessage', async(ctx) => {
   }
 })
 
-router.post('/replyMessage', async(ctx) => {
-  const { fromName, toUid, content } = ctx.request.body
-  const msgReply = new MsgReply ({
+router.post('/replyComment', async(ctx) => {
+  const { articleId, fromName, toUid, content } = ctx.request.body
+  const reply = new Reply ({
+    article_id: articleId,
     from_name: fromName,
     to_uid: toUid,
     content
   })
   let code, msg
   try {
-    await msgReply.save()
+    await reply.save()
     code = 200
     msg = '添加成功'
   }catch(e) {
-    console.log(e)
     code = -1
     msg = '添加失败'
   }
@@ -95,11 +100,11 @@ router.post('/replyMessage', async(ctx) => {
   }
 })
 
-router.post('/deleteReplyMessage', async(ctx) => {
-  const { replyMsgId } = ctx.request.body
+router.post('/deleteReply', async(ctx) => {
+  const { replyId } = ctx.request.body
   let code, msg, data;
   try {
-    data = await MsgReply.remove({_id: replyMsgId})
+    data = await Reply.remove({_id: replyId})
     code = 200
     msg = '删除成功'
   } catch (e) {
