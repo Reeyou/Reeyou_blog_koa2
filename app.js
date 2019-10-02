@@ -12,6 +12,8 @@ const dbs = require('./config/db.config')
 
 const routers = require('./routes/index')
 
+const checkTokenStatus = require('./middleware/checkToken')
+
 // error handler
 onerror(app)
 app.use(koaBody({
@@ -64,6 +66,9 @@ app.use(upload.routes(), upload.allowedMethods())
 app.use(login.routes(), login.allowedMethods())
 app.use(comment.routes(), comment.allowedMethods())
 app.use(message.routes(), message.allowedMethods())
+
+// token校验
+app.use(checkTokenStatus)
 
 // error-handling
 app.on('error', (err, ctx) => {

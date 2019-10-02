@@ -4,16 +4,7 @@ const axios = require('axios')
 
 router.post('/sendCode', async(ctx) => {
   const uriCode = ctx.request.body.code
-  let code, msg, data
-  try{
-    data = ctx.request.body
-    code = 200
-    msg = '查找成功'
-  } catch (e) {
-    code = -1
-    msg = '查找失败'
-  }
-  
+  let code, msg
   // const clientID = '8f2c841682b05c643d90',
   // clientSecret = 'b3a0be535d3b67b4145dd5decde862408b036bc2'
   const clientID = '310316c9d00ddccc32ef',

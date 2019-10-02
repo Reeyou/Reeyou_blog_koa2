@@ -40,6 +40,7 @@ router.get('/getArticleList', async(ctx) => {
   // let limit = 6, size = 1
   try{
     data = await Article.find()
+    // console.log(data)
     // data = await Article.find({}).skip(1).limit(2)
     code = 200
     msg = '查找成功'
@@ -47,7 +48,7 @@ router.get('/getArticleList', async(ctx) => {
     code = -1
     msg = '查找失败'
   }
-  ctx.response.body = {
+  ctx.body = {
     code: code,
     msg: msg,
     data,
