@@ -57,6 +57,8 @@ app.use(async (ctx, next) => {
   console.log(`${ctx.method} ${ctx.url} - ${ms}ms`)
 })
 
+// token校验
+app.use(checkTokenStatus)
 // routes
 const { article,users,tag,upload,login,comment,message } = routers
 app.use(article.routes(), article.allowedMethods())
@@ -67,8 +69,8 @@ app.use(login.routes(), login.allowedMethods())
 app.use(comment.routes(), comment.allowedMethods())
 app.use(message.routes(), message.allowedMethods())
 
-// token校验
-app.use(checkTokenStatus)
+// // token校验
+// app.use(checkTokenStatus)
 
 // error-handling
 app.on('error', (err, ctx) => {

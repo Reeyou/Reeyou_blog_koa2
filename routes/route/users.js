@@ -2,8 +2,7 @@ const router = require('koa-router')()
 
 const User = require('../../models/user')
 
-const jwt = require('jsonwebtoken') 
-const key = require('../../config/key')
+const getToken = require('../../middleware/getToken')
 
 router.prefix('/admin')
 router.post('/login', async(ctx, next) => {
@@ -18,8 +17,7 @@ router.post('/login', async(ctx, next) => {
         message: '用户名不存在'
       }
     } else if (responseData.password === password) {
-      const rule = {name: username}
-      let jwt_token = jwt.sign(rule,key.secretKey,{expiresIn: 60 * 5})
+      let jwt_token = getToken({name: username})
       ctx.body = {
         code: 200,
         message: '登录成功',
@@ -39,6 +37,15 @@ router.post('/login', async(ctx, next) => {
       code: -1,
       message: '登陆错误'
     }
+  }
+})
+router.get('/refreshToken', async(ctx,next) => {
+  let newToken
+  await getToken({token: 'newToken'})
+  ctx.body = {
+    code: 200,
+    message: '刷新token成功',
+    data: newToken
   }
 })
 
