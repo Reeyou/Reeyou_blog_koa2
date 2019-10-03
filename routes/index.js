@@ -2,9 +2,11 @@ const article = require('./admin/article')
 const users = require('./admin/users')
 const tag = require('./admin/tag')
 const upload = require('./admin/upload')
+const adminMessage = require('./admin/message')
+
 const login = require('./web/login')
 const comment = require('./web/comment')
-const message = require('./web/message')
+const webMessage = require('./web/message')
 
 module.exports = {
   article,
@@ -13,5 +15,6 @@ module.exports = {
   upload,
   login,
   comment,
-  message
+  adminMessage,
+  webMessage
 }

@@ -60,14 +60,15 @@ app.use(async (ctx, next) => {
 // token校验
 app.use(checkTokenStatus)
 // routes
-const { article,users,tag,upload,login,comment,message } = routers
+const { article,users,tag,upload,login,comment,adminMessage,webMessage } = routers
 app.use(article.routes(), article.allowedMethods())
 app.use(users.routes(), users.allowedMethods())
 app.use(tag.routes(), tag.allowedMethods())
 app.use(upload.routes(), upload.allowedMethods())
 app.use(login.routes(), login.allowedMethods())
 app.use(comment.routes(), comment.allowedMethods())
-app.use(message.routes(), message.allowedMethods())
+app.use(adminMessage.routes(), adminMessage.allowedMethods())
+app.use(webMessage.routes(), webMessage.allowedMethods())
 
 // // token校验
 // app.use(checkTokenStatus)

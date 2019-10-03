@@ -4,7 +4,7 @@ const getToken = require('../middleware/getToken')
 
 async function checkTokenStatus(ctx, next) {
   let url = ctx.request.url
-  if (url == "/admin/login") await next()
+  if (url == "/admin/login" || url == "/admin/register") await next()
   else {
     // 规定token写在header 的 'autohrization' 
     let token = ctx.request.headers["authorization"];

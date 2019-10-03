@@ -72,7 +72,7 @@ router.get('/deleteTagName', async(ctx) => {
 
   let code, msg ,data
   try {
-    data = await Tag.where({tag_id: tagid}).remove()
+    data = await Tag.where({_id: tagid}).remove()
     code = 200
     msg = '删除成功'
   } catch (e) {
