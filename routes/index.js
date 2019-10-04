@@ -7,6 +7,8 @@ const adminMessage = require('./admin/message')
 const login = require('./web/login')
 const comment = require('./web/comment')
 const webMessage = require('./web/message')
+const webArticle = require('./web/web_article')
+const webTag = require('./web/web_Tag')
 
 module.exports = {
   article,
@@ -16,5 +18,7 @@ module.exports = {
   login,
   comment,
   adminMessage,
-  webMessage
+  webMessage,
+  webArticle,
+  webTag
 }

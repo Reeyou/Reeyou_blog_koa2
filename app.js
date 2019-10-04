@@ -58,9 +58,9 @@ app.use(async (ctx, next) => {
 })
 
 // token校验
-app.use(checkTokenStatus)
+// app.use(checkTokenStatus)
 // routes
-const { article,users,tag,upload,login,comment,adminMessage,webMessage } = routers
+const { article,users,tag,upload,login,comment,adminMessage,webMessage,webArticle,webTag } = routers
 app.use(article.routes(), article.allowedMethods())
 app.use(users.routes(), users.allowedMethods())
 app.use(tag.routes(), tag.allowedMethods())
@@ -69,6 +69,8 @@ app.use(login.routes(), login.allowedMethods())
 app.use(comment.routes(), comment.allowedMethods())
 app.use(adminMessage.routes(), adminMessage.allowedMethods())
 app.use(webMessage.routes(), webMessage.allowedMethods())
+app.use(webArticle.routes(), webArticle.allowedMethods())
+app.use(webTag.routes(), webTag.allowedMethods())
 
 // // token校验
 // app.use(checkTokenStatus)

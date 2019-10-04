@@ -28,13 +28,12 @@ router.post('/addComment', async(ctx) => {
 
 router.get('/getComment', async(ctx) => {
   const { pageSize, limit, articleId } = ctx.request.query
-  pageSize ? pageSize : 1
-  limit ? limit : 5
   let code, msg, data, reply;
   try {
-    data = await Comment.find({articleId: articleId},null,{lean: true})
+    list = await Comment.find({articleId: articleId},null,{lean: true})
                         .skip((pageSize-1)*limit)
                         .limit(Number(limit))
+    total = await Comment.count()
     let replyIdArr = []
     for(var i = 0; i < data.length; i++) {
       replyIdArr.push(data[i]._id)
@@ -53,7 +52,10 @@ router.get('/getComment', async(ctx) => {
   ctx.response.body = {
     code: code,
     msg: msg,
-    data: data
+    data: {
+      list,
+      total
+    }
   }
 })
 

@@ -16,8 +16,8 @@ router.post('/upload', async(ctx, next) => {
   ctx.response.body = {
     code: 200,
     msg: "上传成功",
-    // data: "http://106.54.44.253:3000/images" + extension_name
-    data: "http://localhost:3000/images" + extension_name
+    data: "http://106.54.44.253:3000/images" + extension_name
+    // data: "http://localhost:3000/images" + extension_name
   };
 })
 

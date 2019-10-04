@@ -15,9 +15,10 @@ router.get('/getArticleList', async(ctx) => {
   limit ? limit : 5
   let code, msg, data
   try{
-    data = await Article.find()
+    list = await Article.find()
                         .skip((pageSize-1)*limit)
                         .limit(Number(limit))
+    total = await Article.count()
     code = 200
     msg = '查找成功'
   } catch (e) {
@@ -28,11 +29,14 @@ router.get('/getArticleList', async(ctx) => {
   ctx.body = {
     code: code,
     msg: msg,
-    data,
+    data: {
+      list,
+      total
+    },
   }
 })
-router.get('/getArticleDetail/:id', async(ctx) => {
-  const id = ctx.params.id
+router.get('/getArticleDetail', async(ctx) => {
+  const { id }= ctx.request.query
   console.log(id)
   let code, msg, data
   try{
