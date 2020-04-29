@@ -1,6 +1,4 @@
 const router = require('koa-router')()
-// import assert, { AssertionError } from 'assert';
-const assert = require('assert')
 
 const Article = require('../../models/article')
 
