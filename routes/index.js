@@ -8,17 +8,17 @@ const login = require('./web/login')
 const comment = require('./web/comment')
 const webMessage = require('./web/message')
 const webArticle = require('./web/web_article')
-const webTag = require('./web/web_Tag')
+const webTag = require('./web/web_tag')
 
 module.exports = {
-  article,
-  users,
-  tag,
-  upload,
-  login,
-  comment,
-  adminMessage,
-  webMessage,
-  webArticle,
-  webTag
+    article,
+    users,
+    tag,
+    upload,
+    login,
+    comment,
+    adminMessage,
+    webMessage,
+    webArticle,
+    webTag,
 }
