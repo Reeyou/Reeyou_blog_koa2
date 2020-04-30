@@ -1,9 +1,9 @@
-const jwt = require('jsonwebtoken') 
-const key = require('../config/key')
+const jwt = require('jsonwebtoken')
+const config = require('../config')
 
 function getToken(obj) {
-  let result = jwt.sign(obj, key.secretKey, {expiresIn: 60})
-  return result
+    const result = jwt.sign(obj, config.jwtSecret, { expiresIn: 60 })
+    return result
 }
 
 module.exports = getToken

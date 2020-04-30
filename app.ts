@@ -1,22 +1,20 @@
+import config from './config'
+
 const Koa = require('koa')
 
 const app = new Koa()
-const views = require('koa-views')
 const json = require('koa-json')
-const onerror = require('koa-onerror')
-const bodyparser = require('koa-bodyparser')
 const koaBody = require('koa-body')
 const logger = require('koa-logger')
 
 const mongoose = require('mongoose')
-const dbs = require('./config/db.config')
 
 const routers = require('./routes/index')
 
-const checkTokenStatus = require('./middleware/checkToken')
+// const checkTokenStatus = require('./middleware/checkToken')
 
 // error handler
-onerror(app)
+// onerror(app)
 app.use(koaBody({
     multipart: true,
     formidable: {
@@ -31,11 +29,9 @@ app.use(json())
 app.use(logger())
 app.use(require('koa-static')(`${__dirname}/public`))
 
-app.use(views(`${__dirname}/views`, {
-    extension: 'pug',
-}))
 
-mongoose.connect(dbs.dbs, {
+console.log(config.database)
+mongoose.connect(config.database, {
     useNewUrlParser: true,
 })
 
@@ -51,17 +47,19 @@ db.once('open', () => {
 
 
 // logger
-app.use(async (ctx, next) => {
-    const start = new Date()
-    await next()
-    const ms = new Date() - start
-    console.log(`${ctx.method} ${ctx.url} - ${ms}ms`)
-})
+// app.use(async (ctx, next) => {
+//     const start = new Date()
+//     await next()
+//     const ms = new Date() - start
+//     console.log(`${ctx.method} ${ctx.url} - ${ms}ms`)
+// })
 
 // token校验
 // app.use(checkTokenStatus)
 // routes
-const { article, users, tag, upload, login, comment, adminMessage, webMessage, webArticle, webTag } = routers
+const {
+    article, users, tag, upload, login, comment, adminMessage, webMessage, webArticle, webTag,
+} = routers
 app.use(article.routes(), article.allowedMethods())
 app.use(users.routes(), users.allowedMethods())
 app.use(tag.routes(), tag.allowedMethods())
@@ -77,7 +75,7 @@ app.use(webTag.routes(), webTag.allowedMethods())
 // app.use(checkTokenStatus)
 
 // error-handling
-app.on('error', (err, ctx) => {
+app.on('error', (err:any, ctx:any) => {
     console.error('server error', err, ctx)
 })
 

@@ -1,6 +1,7 @@
-const router = require('koa-router')()
+import Router from 'koa-router'
+import Tag from '../../models/tag'
 
-const Tag = require('../../models/tag')
+const router = new Router()
 
 /**
   * @param pageSize 页数
