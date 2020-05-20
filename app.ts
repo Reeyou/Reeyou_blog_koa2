@@ -1,15 +1,15 @@
-import config from './config'
+import config from './src/config'
+import { mongodb } from './src/loaders'
+
 
 const Koa = require('koa')
 
 const app = new Koa()
 const json = require('koa-json')
 const koaBody = require('koa-body')
-const logger = require('koa-logger')
 
-const mongoose = require('mongoose')
 
-const routers = require('./routes/index')
+const routers = require('./src/routes/index')
 
 // const checkTokenStatus = require('./middleware/checkToken')
 
@@ -21,29 +21,13 @@ app.use(koaBody({
         maxFileSize: 200 * 1024 * 1024, // 设置上传文件大小最大限制，默认2M
     },
 }))
-// middlewares
-// app.use(bodyparser({
-//   enableTypes:['json', 'form', 'text']
-// }))
+
 app.use(json())
-app.use(logger())
+
 app.use(require('koa-static')(`${__dirname}/public`))
 
-
-console.log(config.database)
-mongoose.connect(config.database, {
-    useNewUrlParser: true,
-})
-
-const db = mongoose.connection
-// 输出连接日志
-db.on('error', () => {
-    console.log('Connection error')
-})
-
-db.once('open', () => {
-    console.log('Mongo working!')
-})
+// mongodb
+mongodb(config.database)
 
 
 // logger

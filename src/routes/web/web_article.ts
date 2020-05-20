@@ -1,6 +1,7 @@
-const router = require('koa-router')()
+import Router from 'koa-router'
+import Article from '../../models/article'
 
-const Article = require('../../models/article')
+const router = new Router()
 
 /**
   * @param pageSize 页数
@@ -10,7 +11,7 @@ const Article = require('../../models/article')
   * @param  limit   数据个数
   */
 router.get('/getArticleList', async (ctx) => {
-    const { pageSize = 1, limit = 5 } = ctx.request.query
+    const { pageSize, limit } = ctx.request.query
 
     let code; let msg; let list; let
         total
@@ -18,7 +19,7 @@ router.get('/getArticleList', async (ctx) => {
         list = await Article.find()
             .skip((pageSize - 1) * limit)
             .limit(Number(limit))
-        total = await Article.count()
+        total = await Article.count(() => {})
         code = 200
         msg = '查找成功'
     } catch (e) {
