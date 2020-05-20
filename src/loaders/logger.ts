@@ -1,26 +1,26 @@
 import winston, { format } from 'winston'
 import config from '../config'
 
-const { printf } = format
-
-const myFormat = printf(({ level, message, timestamp }) => `[${timestamp}] [${level}] - ${message}`)
-
 
 const transports = []
 
 if (process.env.NODE_ENV !== 'development') {
     transports.push(
-        // [2020-05-20 16:29:14] [info] - Mongodb is working now.
+        // 日志打印并保存
         new winston.transports.Console({
-            format: myFormat,
+            format: format.combine(
+                format.colorize(),
+                format.printf((info) => `[${info.timestamp}] ${info.level}: ${info.message}`),
+            ),
         }),
+        new winston.transports.File({ filename: 'logger.log' }),
     )
 } else {
     transports.push(
         new winston.transports.Console({
-            format: winston.format.combine(
-                winston.format.cli(),
-                winston.format.splat(),
+            format: format.combine(
+                format.cli(),
+                format.splat(),
             ),
         }),
     )
