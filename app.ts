@@ -1,6 +1,7 @@
 import config from './src/config'
 import { mongodb } from './src/loaders'
-
+import catchError from './src/middleware/catchError'
+import Init from './init'
 
 const Koa = require('koa')
 
@@ -11,9 +12,12 @@ const koaBody = require('koa-body')
 
 const routers = require('./src/routes/index')
 
+Init.initManage(app)
 // const checkTokenStatus = require('./middleware/checkToken')
 
 // error handler
+app.use(catchError)
+
 // onerror(app)
 app.use(koaBody({
     multipart: true,

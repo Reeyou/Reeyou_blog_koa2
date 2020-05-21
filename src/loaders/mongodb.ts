@@ -1,5 +1,4 @@
 import mongoose from 'mongoose'
-import logger from './logger'
 
 export default function mongodb(url: string) {
     mongoose.connect(url, {
@@ -8,9 +7,9 @@ export default function mongodb(url: string) {
 
     const db = mongoose.connection
     db.once('open', () => {
-        logger.info('Mongodb is working now.')
+        global.logger.info('Mongodb is working now.')
     })
     db.on('error', (err) => {
-        logger.error('Connection Error:\n', err)
+        global.logger.error('Connection Error:\n', err)
     })
 }

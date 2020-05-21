@@ -17,6 +17,10 @@ router.get('/getTagList', async (ctx:any) => {
         data = await Tag.find()
         code = 200
         msg = '查找成功'
+        logger.info('sucess')
+        /* global logger, HttpException */
+        logger.error('test')
+        throw new HttpException()
     } catch (e) {
         code = -1
         msg = '查找失败'
