@@ -12,6 +12,10 @@ class HttpException extends Error {
         this.code = code
         this.msg = msg
     }
+
+    static test() {
+        return 'test'
+    }
 }
 
 class NotFound extends HttpException {

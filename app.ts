@@ -2,6 +2,7 @@ import config from './src/config'
 import { mongodb } from './src/loaders'
 import catchError from './src/middleware/catchError'
 import Init from './init'
+import article from './src/routes/article'
 
 const Koa = require('koa')
 
@@ -46,7 +47,7 @@ mongodb(config.database)
 // app.use(checkTokenStatus)
 // routes
 const {
-    article, users, tag, upload, login, comment, adminMessage, webMessage, webArticle, webTag,
+    users, tag, upload, login, comment, adminMessage, webMessage, webArticle, webTag,
 } = routers
 app.use(article.routes(), article.allowedMethods())
 app.use(users.routes(), users.allowedMethods())
