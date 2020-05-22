@@ -2,7 +2,7 @@ import { Schema, model, Document } from 'mongoose'
 
 const tagSchema = new Schema({
     tagId: {
-        type: Schema.Types.ObjectId,
+        type: String,
     },
     tagName: {
         type: String,
@@ -12,7 +12,7 @@ const tagSchema = new Schema({
 
 interface TagDocument extends Document {
     _id: Schema.Types.ObjectId;
-    tagId: Schema.Types.ObjectId;
+    tagId: string;
     tagName: string;
 }
 

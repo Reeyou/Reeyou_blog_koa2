@@ -1,6 +1,7 @@
 import { HttpException } from './src/middleware/HttpException'
 import logger from './src/loaders/logger'
 import Constants from './src/common/constants'
+import Utils from './src/utils'
 
 export default class Init {
     static app: any
@@ -12,6 +13,7 @@ export default class Init {
         Init.loadHttpException() // 加入全局Exception
         Init.loadLogger() // 加入全局logger
         Init.loadConstans()
+        Init.loadUtils()
     }
 
     static loadHttpException() {
@@ -24,5 +26,9 @@ export default class Init {
 
     static loadConstans() {
         global.Constants = Constants
+    }
+
+    static loadUtils() {
+        global.utils = Utils
     }
 }

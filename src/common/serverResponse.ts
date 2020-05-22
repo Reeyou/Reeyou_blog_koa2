@@ -1,3 +1,4 @@
+import Constants from './constants'
 
 export default class ServerResponse {
     code: number
@@ -19,8 +20,8 @@ export default class ServerResponse {
     }
 
     // 操作错误
-    public static ERROR(ctx: any, msg: string) {
-        ctx.response.body = new ServerResponse(1, msg, {})
+    public static ERROR<T>(ctx: any, msg: string, data: T) {
+        ctx.response.body = new ServerResponse(1, msg, data)
         return ctx.response.body
     }
 
@@ -32,7 +33,7 @@ export default class ServerResponse {
 
     // 参数错误
     public static ILLEGAL_ARGUMENT(ctx: any) {
-        ctx.response.body = new ServerResponse(2, 'ILLEGAL_ARGUMENT', {})
+        ctx.response.body = new ServerResponse(400, Constants.ILLEGAL_ARGUMENT, {})
         return ctx.response.body
     }
 }

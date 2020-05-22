@@ -12,4 +12,10 @@ export default class Constants {
     static MSG_ERROR = '信息操作失败'
 
     static MSG_ERROR_CHECK = '校验未通过'
+
+    static ILLEGAL_ARGUMENT = '参数错误'
+
+    static ARTICLE_ADD_ERROR = '添加文章失败'
+
+    static ARTICLE_TITLE_HAS = '文章标题已存在'
 }

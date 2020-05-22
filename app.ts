@@ -2,16 +2,13 @@ import config from './src/config'
 import { mongodb } from './src/loaders'
 import catchError from './src/middleware/catchError'
 import Init from './init'
-import article from './src/routes/article'
+import router from './src/routes'
 
 const Koa = require('koa')
 
 const app = new Koa()
 const json = require('koa-json')
 const koaBody = require('koa-body')
-
-
-const routers = require('./src/routes/index')
 
 Init.initManage(app)
 // const checkTokenStatus = require('./middleware/checkToken')
@@ -45,23 +42,9 @@ mongodb(config.database)
 
 // token校验
 // app.use(checkTokenStatus)
-// routes
-const {
-    users, tag, upload, login, comment, adminMessage, webMessage, webArticle, webTag,
-} = routers
-app.use(article.routes(), article.allowedMethods())
-app.use(users.routes(), users.allowedMethods())
-app.use(tag.routes(), tag.allowedMethods())
-app.use(upload.routes(), upload.allowedMethods())
-app.use(login.routes(), login.allowedMethods())
-app.use(comment.routes(), comment.allowedMethods())
-app.use(adminMessage.routes(), adminMessage.allowedMethods())
-app.use(webMessage.routes(), webMessage.allowedMethods())
-app.use(webArticle.routes(), webArticle.allowedMethods())
-app.use(webTag.routes(), webTag.allowedMethods())
 
-// // token校验
-// app.use(checkTokenStatus)
+// routes
+app.use(router.routes(), router.allowedMethods())
 
 // error-handling
 app.on('error', (err:any, ctx:any) => {
