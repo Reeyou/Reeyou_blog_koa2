@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "start": "npm run dev",
-    "dev": "./node_modules/.bin/cross-env NODE_ENV=development && nodemon bin/www --exec \"./node_modules/.bin/ts-node --files\" --config .nodemonrc",
+    "dev": "./node_modules/.bin/cross-env NODE_ENV=development && nodemon bin/start.ts --exec \"./node_modules/.bin/ts-node --files\" --config .nodemonrc",
     "prd": "pm2 start app",
     "test": "echo \"Error: no test specified\" && exit 1"
   },

@@ -52,4 +52,4 @@ app.on('error', (err:any, ctx:any) => {
 })
 
 
-module.exports = app
+export default app
